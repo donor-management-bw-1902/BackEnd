@@ -10,7 +10,7 @@ function register(req, res) {
   const creds = req.body;
   db("users")
     .insert(creds)
-    .then(id => res.status(201).json(id))
+    .then(id => res.status(201).json({ id: id[0] }))
     .catch(err => res.status(500).json(err));
 }
 
