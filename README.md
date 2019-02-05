@@ -1,7 +1,5 @@
 # Instructions #
 
-coming soon
-
 ## Server set up##
 
 -npm / yarn int

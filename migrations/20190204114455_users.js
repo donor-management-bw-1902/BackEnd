@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       .string("username", 255)
       .notNullable()
       .unique();
+    users.string("name", 255).notNullable();
     users.string("password", 255).notNullable();
     users.boolean("isAdmin").defaultTo(false);
   });
