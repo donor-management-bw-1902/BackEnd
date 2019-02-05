@@ -55,7 +55,7 @@ function login(req, res) {
     .then(user => {
       if (user && bcrypt.compareSync(creds.password, user.password)) {
         const token = generateToken(user);
-        res.status(200).json(token);
+        res.status(200).json({ token: token, isAdmin: user.isAdmin });
       } else {
         res.status(401).json({ message: "Inccorect username or password." });
       }
