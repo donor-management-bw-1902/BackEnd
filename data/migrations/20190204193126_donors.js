@@ -11,6 +11,8 @@ exports.up = function(knex, Promise) {
     donors.string("city", 255).defaultsTo(null);
     donors.string("address", 255).defaultsTo(null);
     donors.integer("zip").defaultsTo(null);
+    donors.string("lastContacted").defaultsTo(null);
+    donors.string("contactMethod").defaultTo(null);
   });
 };
 
