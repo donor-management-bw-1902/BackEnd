@@ -1,7 +1,7 @@
 const db = require("../data/dbConfig");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const jwtSecret = "secret";
+const jwtSecret = process.env.JWT_SECRET || "secret";
 const { authenticate } = require("../auth/jwtAuth.js");
 //ENDPOINTS
 module.exports = server => {
@@ -11,6 +11,7 @@ module.exports = server => {
   server.post("/api/donors", authenticate, addDonor);
   server.get("/api/donations", authenticate, getDonations);
   server.post("/api/donations", authenticate, addDonation);
+  //server.post("/api/dev/users")
 };
 //TOKEN MAKER
 function generateToken(user) {
