@@ -86,6 +86,7 @@ function getDonations(req, res) {
 
 function addDonor(req, res) {
   donor = req.body;
+  donor.userID = req.decoded.subject;
   db("donors")
     .insert(donor)
     .then(id => res.status(201).json({ id: id[0] }))
