@@ -65,18 +65,13 @@ function login(req, res) {
 }
 
 function getDonors(req, res) {
-  decodedToken = req.decoded;
-  if (decodedToken.isAdmin) {
-    db("donors")
-      .then(donors => {
-        res.status(200).json(donors);
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      });
-  } else {
-    res.status(401).json({ message: "You are not authorized to view this" });
-  }
+  db("donors")
+    .then(donors => {
+      res.status(200).json(donors);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 }
 
 function getDonations(req, res) {
