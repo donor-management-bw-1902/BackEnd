@@ -97,6 +97,7 @@ function updateDonor(req, res) {
   const { id } = req.params;
   const donor = req.body;
   donor.id = id;
+  donor.userID = req.decoded.subject;
   if (donor.name && donor.userID) {
     db("donors")
       .where("id", "=", id)
@@ -105,7 +106,7 @@ function updateDonor(req, res) {
       .catch(err => res.status(500).json(err));
   } else {
     res.status(400).json({
-      message: "please pass a name and id for the donor to be updated"
+      message: "please pass a donor object"
     });
   }
 }
