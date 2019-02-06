@@ -11,7 +11,7 @@ module.exports = server => {
   server.post("/api/donors", authenticate, addDonor);
   server.get("/api/donations", authenticate, getDonations);
   server.post("/api/donations", authenticate, addDonation);
-  //server.post("/api/dev/users")
+  server.put("/api/donors/:id", authenticate, updateDonor);
 };
 //TOKEN MAKER
 function generateToken(user) {
@@ -91,6 +91,23 @@ function addDonor(req, res) {
     .insert(donor)
     .then(id => res.status(201).json({ id: id[0] }))
     .catch(err => res.status(500).json(err));
+}
+
+function updateDonor(req, res) {
+  const { id } = req.params;
+  const donor = req.body;
+  donor.id = id;
+  if (donor.name && donor.userID) {
+    db("donors")
+      .where("id", "=", id)
+      .update(donor)
+      .then(responce => res.status(201).json({ responce }))
+      .catch(err => res.status(500).json(err));
+  } else {
+    res.status(400).json({
+      message: "please pass a name and id for the donor to be updated"
+    });
+  }
 }
 
 function addDonation(req, res) {
