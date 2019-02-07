@@ -1,43 +1,30 @@
+const faker = require("faker");
+
+function createFakeDonor() {
+  return {
+    name: faker.name.findName(),
+    userID: Math.floor(Math.random() * 3) + 1,
+    email: faker.internet.email(),
+    city: faker.address.city(),
+    address: faker.address.streetAddress(),
+    zip: faker.random.number(),
+    lastContacted: faker.date.month(),
+    contactMethod: "email"
+  };
+}
+
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex("donors")
     .del()
     .then(function() {
+      //userskn
+      const fakeDonors = [];
+      const numberOfDonors = 100;
+      for (let i = 0; i < numberOfDonors; i++) {
+        fakeDonors.push(createFakeDonor());
+      }
       // Inserts seed entries
-      return knex("donors").insert([
-        {
-          id: 1,
-          name: "donor 1",
-          userID: "2",
-          email: "email@gmail.com",
-          city: "New York",
-          address: "11111 north st",
-          zip: "12345",
-          lastContacted: "feb 9 2016",
-          contactMethod: "post"
-        },
-        {
-          id: 2,
-          name: "donor 2",
-          userID: "3",
-          email: "email2@gmail.com",
-          city: "New York",
-          address: "11123 north st",
-          zip: "1234544",
-          lastContacted: "sep 9 2009",
-          contactMethod: "email"
-        },
-        {
-          id: 3,
-          name: "donor 3",
-          userID: "2",
-          email: "email4@gmail.com",
-          city: "Chicago",
-          address: "12 south st",
-          zip: "12111",
-          lastContacted: "aug 5 2018",
-          contactMethod: "phone"
-        }
-      ]);
+      return knex("donors").insert(fakeDonors);
     });
 };

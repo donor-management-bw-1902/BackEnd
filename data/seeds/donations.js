@@ -1,34 +1,25 @@
+const faker = require("faker");
+
+function createFakeDonation() {
+  return {
+    donationAmount: faker.random.number(),
+    donationLocation: faker.address.city(),
+    donorID: Math.floor(Math.random() * 99) + 1
+  };
+}
+
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex("donations")
     .del()
     .then(function() {
+      //donations
+      const fakeDonations = [];
+      const numberOfDonations = 200;
+      for (let i = 0; i < numberOfDonations; i++) {
+        fakeDonations.push(createFakeDonation());
+      }
       // Inserts seed entries
-      return knex("donations").insert([
-        {
-          id: 1,
-          donationLocation: "location 1",
-          donorID: "1",
-          donationAmount: 786.55
-        },
-        {
-          id: 2,
-          donationLocation: "location 2",
-          donorID: "2",
-          donationAmount: 1000
-        },
-        {
-          id: 3,
-          donationLocation: "location 1",
-          donorID: "3",
-          donationAmount: 1550
-        },
-        {
-          id: 4,
-          donationLocation: "location 4",
-          donorID: "2",
-          donationAmount: 22.5
-        }
-      ]);
+      return knex("donations").insert(fakeDonations);
     });
 };
